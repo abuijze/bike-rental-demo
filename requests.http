@@ -34,3 +34,8 @@ POST http://localhost:8080/bikes/1234/return?location=Barcelona
 Accept: application/json
 
 ###
+
+GET http://localhost:8080/bikes/1234/watch
+Accept: text/event-stream
+
+###
