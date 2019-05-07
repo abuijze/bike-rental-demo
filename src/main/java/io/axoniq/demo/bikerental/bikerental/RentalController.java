@@ -3,6 +3,7 @@ package io.axoniq.demo.bikerental.bikerental;
 import io.axoniq.demo.bikerental.bikerental.coreapi.RegisterBikeCommand;
 import io.axoniq.demo.bikerental.bikerental.coreapi.RentBikeCommand;
 import io.axoniq.demo.bikerental.bikerental.coreapi.ReturnBikeCommand;
+import io.axoniq.demo.bikerental.bikerental.query.BikeStatus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
@@ -52,13 +53,13 @@ public class RentalController {
     }
 
     @GetMapping()
-    public CompletableFuture<List<Bike>> findAll() {
-        return queryGateway.query("findAll", null, ResponseTypes.multipleInstancesOf(Bike.class));
+    public CompletableFuture<List<BikeStatus>> findAll() {
+        return queryGateway.query("findAll", null, ResponseTypes.multipleInstancesOf(BikeStatus.class));
     }
 
     @GetMapping("/{bikeId}")
-    public CompletableFuture<Bike> findOne(@PathVariable("bikeId") String bikeId) {
-        return queryGateway.query("findOne", bikeId, Bike.class);
+    public CompletableFuture<BikeStatus> findOne(@PathVariable("bikeId") String bikeId) {
+        return queryGateway.query("findOne", bikeId, BikeStatus.class);
     }
 
 
