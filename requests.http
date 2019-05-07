@@ -10,6 +10,11 @@ Accept: application/json
 
 ###
 
+GET http://localhost:8080/bikes/1234/history
+Accept: application/json
+
+###
+
 PUT http://localhost:8080/bikes/1234?location=Vilnius
 Accept: application/json
 
