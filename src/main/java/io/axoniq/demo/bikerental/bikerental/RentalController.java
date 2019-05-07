@@ -8,7 +8,10 @@ import io.axoniq.demo.bikerental.bikerental.query.BikeStatus;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.axonframework.queryhandling.SubscriptionQueryBackpressure;
+import org.axonframework.queryhandling.SubscriptionQueryResult;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.UUID;
@@ -66,6 +69,16 @@ public class RentalController {
     @GetMapping("/{bikeId}/history")
     public CompletableFuture<List<BikeHistory>> findMovements(@PathVariable("bikeId") String bikeId) {
         return queryGateway.query("locationHistory", bikeId, ResponseTypes.multipleInstancesOf(BikeHistory.class));
+    }
+
+    @GetMapping(value = "/{bikeId}/watch", produces = "text/event-stream")
+    public Flux<BikeHistory> watch(@PathVariable("bikeId") String bikeId) {
+        SubscriptionQueryResult<List<BikeHistory>, BikeHistory> response = queryGateway.subscriptionQuery("locationHistory", bikeId,
+                                                                                                          ResponseTypes.multipleInstancesOf(BikeHistory.class),
+                                                                                                          ResponseTypes.instanceOf(BikeHistory.class),
+                                                                                                          SubscriptionQueryBackpressure.defaultBackpressure()
+        );
+        return response.initialResult().flatMapMany(Flux::fromIterable).concatWith(response.updates());
     }
 
 }
