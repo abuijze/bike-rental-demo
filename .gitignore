@@ -1,6 +1,8 @@
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+database.lock.db
+database.mv.db
 
 ### STS ###
 .apt_generated

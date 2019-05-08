@@ -20,6 +20,11 @@ Accept: application/json
 
 ###
 
+PUT http://localhost:8080/bikes/?location=Amsterdam
+Accept: application/json
+
+###
+
 POST http://localhost:8080/bikes/1234/rent?renter=Allard
 Accept: application/json
 
@@ -37,5 +42,10 @@ Accept: application/json
 
 GET http://localhost:8080/bikes/1234/watch
 Accept: text/event-stream
+
+###
+
+POST http://localhost:8080/bikes/generate?bikes=20&rentals=10
+Accept: application/json
 
 ###

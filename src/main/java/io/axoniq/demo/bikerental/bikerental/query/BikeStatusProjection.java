@@ -5,8 +5,10 @@ import io.axoniq.demo.bikerental.bikerental.coreapi.BikeRentedEvent;
 import io.axoniq.demo.bikerental.bikerental.coreapi.BikeReturnedEvent;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Profile("query")
 @Component
 public class BikeStatusProjection {
 
