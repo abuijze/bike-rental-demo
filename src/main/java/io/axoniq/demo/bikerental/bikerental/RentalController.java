@@ -13,9 +13,11 @@ import org.axonframework.queryhandling.SubscriptionQueryResult;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RestController
 @RequestMapping("/bikes")
@@ -79,6 +81,28 @@ public class RentalController {
                                                                                                           SubscriptionQueryBackpressure.defaultBackpressure()
         );
         return response.initialResult().flatMapMany(Flux::fromIterable).concatWith(response.updates());
+    }
+
+    @PostMapping(value = "/generate")
+    public void generateData(@RequestParam("bikes") int bikeCount, @RequestParam("rentals") int rentalCount) {
+        for (int i = 0; i < bikeCount; i++) {
+            String bikeId = UUID.randomUUID().toString();
+            CompletableFuture<?> result = commandGateway.send(new RegisterBikeCommand(bikeId, randomLocation()));
+            for (int c = 0; c < rentalCount; c++) {
+                result = result.thenCompose(r -> commandGateway.send(new RentBikeCommand(bikeId, randomRenter())))
+                               .thenCompose(r -> commandGateway.send(new ReturnBikeCommand(bikeId, randomLocation())));
+            }
+        }
+    }
+
+    private String randomRenter() {
+        List<String> renters = Arrays.asList("Allard", "Steven", "Josh", "Jakub", "Ben", "Marc", "Sara", "Jeroen", "Greg", "Marina");
+        return renters.get(ThreadLocalRandom.current().nextInt(renters.size()));
+    }
+
+    private String randomLocation() {
+        List<String> locations = Arrays.asList("Amsterdam", "Paris", "Vilnius", "Barcelona", "London", "New York", "Berlin", "Milan", "Rome", "Belgrade");
+        return locations.get(ThreadLocalRandom.current().nextInt(locations.size()));
     }
 
 }
