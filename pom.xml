@@ -32,6 +32,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.axonframework.extensions.tracing</groupId>
+            <artifactId>axon-tracing-spring-boot-starter</artifactId>
+            <version>4.1-M1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
+            <version>1.0.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.h2database</groupId>
