@@ -1,0 +1,29 @@
+GET http://localhost:8080/bikes
+Accept: application/json
+
+###
+
+GET http://localhost:8080/bikes/1234
+Accept: application/json
+
+###
+
+PUT http://localhost:8080/bikes/1234?location=Vilnius
+Accept: application/json
+
+###
+
+POST http://localhost:8080/bikes/1234/rent?renter=Allard
+Accept: application/json
+
+###
+
+POST http://localhost:8080/bikes/1234/rent?renter=Steven
+Accept: application/json
+
+###
+
+POST http://localhost:8080/bikes/1234/return?location=Barcelona
+Accept: application/json
+
+###
