@@ -23,7 +23,7 @@ public class Bike {
 
     @CommandHandler
     public Bike(RegisterBikeCommand command) {
-        apply(new BikeRegisteredEvent(command.getBikeId(), command.getLocation()));
+        apply(new BikeRegisteredEvent(command.getBikeId(), command.getBikeType(), command.getLocation()));
     }
 
     @CommandHandler

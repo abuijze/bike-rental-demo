@@ -20,7 +20,7 @@ public class BikeStatusProjection {
 
     @EventHandler
     public void on(BikeRegisteredEvent event) {
-        bikeStatusRepository.save(new BikeStatus(event.getBikeId(), event.getLocation()));
+        bikeStatusRepository.save(new BikeStatus(event.getBikeId(), event.getBikeType(), event.getLocation()));
     }
 
     @EventHandler

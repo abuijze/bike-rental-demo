@@ -32,14 +32,16 @@ public class RentalController {
     }
 
     @PutMapping
-    public CompletableFuture<String> register(@RequestParam("location") String location) {
-        return register(UUID.randomUUID().toString(), location);
+    public CompletableFuture<String> register(@RequestParam("location") String location,
+                                              @RequestParam(value = "bikeType", defaultValue = "regular") String bikeType) {
+        return register(UUID.randomUUID().toString(), bikeType, location);
     }
 
     @PutMapping("{bikeId}")
     public CompletableFuture<String> register(@PathVariable("bikeId") String bikeId,
+                                              @RequestParam(value = "bikeType", defaultValue = "regular") String bikeType,
                                               @RequestParam("location") String location) {
-        return commandGateway.send(new RegisterBikeCommand(bikeId, location));
+        return commandGateway.send(new RegisterBikeCommand(bikeId, bikeType, location));
     }
 
     @PostMapping("/{bikeId}/rent")
@@ -84,10 +86,12 @@ public class RentalController {
     }
 
     @PostMapping(value = "/generate")
-    public void generateData(@RequestParam("bikes") int bikeCount, @RequestParam("rentals") int rentalCount) {
+    public void generateData(@RequestParam("bikes") int bikeCount,
+                             @RequestParam(value = "bikeType", defaultValue = "regular") String bikeType,
+                             @RequestParam("rentals") int rentalCount) {
         for (int i = 0; i < bikeCount; i++) {
             String bikeId = UUID.randomUUID().toString();
-            CompletableFuture<?> result = commandGateway.send(new RegisterBikeCommand(bikeId, randomLocation()));
+            CompletableFuture<?> result = commandGateway.send(new RegisterBikeCommand(bikeId, bikeType, randomLocation()));
             for (int c = 0; c < rentalCount; c++) {
                 result = result.thenCompose(r -> commandGateway.send(new RentBikeCommand(bikeId, randomRenter())))
                                .thenCompose(r -> commandGateway.send(new ReturnBikeCommand(bikeId, randomLocation())));

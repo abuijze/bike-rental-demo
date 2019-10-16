@@ -27,7 +27,8 @@ public class BikeHistoryProjection {
 
     @EventHandler
     public void handle(BikeRegisteredEvent event, @Timestamp Instant timestamp) {
-        bikeHistoryRepository.save(new BikeHistory(event.getBikeId(), timestamp, "Bike registered in " + event.getLocation()));
+        bikeHistoryRepository.save(new BikeHistory(event.getBikeId(), timestamp,
+                                                   "Bike (" + event.getBikeType() + ") registered in " + event.getLocation()));
     }
 
     @EventHandler

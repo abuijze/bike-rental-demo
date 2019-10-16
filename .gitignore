@@ -3,6 +3,7 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 database.lock.db
 database.mv.db
+database.trace.db
 
 ### STS ###
 .apt_generated

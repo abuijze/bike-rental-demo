@@ -11,14 +11,16 @@ public class BikeStatus {
 
     @Id
     private String bikeId;
+    private String bikeType;
     private String location;
     private String renter;
 
     public BikeStatus() {
     }
 
-    public BikeStatus(String bikeId, String location) {
+    public BikeStatus(String bikeId, String bikeType, String location) {
         this.bikeId = bikeId;
+        this.bikeType = bikeType;
         this.location = location;
     }
 
@@ -42,4 +44,7 @@ public class BikeStatus {
         this.renter = renter;
     }
 
+    public String getBikeType() {
+        return bikeType;
+    }
 }
