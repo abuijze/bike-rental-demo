@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Profile;
 import static org.axonframework.modelling.command.AggregateLifecycle.apply;
 
 @Profile("command")
-@Aggregate
+@Aggregate(snapshotTriggerDefinition = "bikeSnapshotDefinition")
 public class Bike {
 
     @AggregateIdentifier
