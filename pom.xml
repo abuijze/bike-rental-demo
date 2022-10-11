@@ -40,7 +40,7 @@
         <dependency>
             <groupId>org.axonframework.extensions.tracing</groupId>
             <artifactId>axon-tracing-spring-boot-starter</artifactId>
-            <version>4.5</version>
+            <version>4.5.2</version>
         </dependency>
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
